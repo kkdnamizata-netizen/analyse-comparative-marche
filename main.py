@@ -1,85 +1,136 @@
 import sys
+import time
 
-from controllers.controleur import ControleurComparateur
-from views.console import (
+from config import (
+    FICHIER_CATALOGUE,
+    FICHIER_LAGUNE,
+    FICHIER_BAOBAB,
+    FICHIER_COMPTOIR,
+    FICHIER_HISTORIQUE,
+    NOMS_BOUTIQUES,
+    PANIER_RENTREE,
+)
+from chargement import (
+    charger_catalogue,
+    charger_offres_lagune,
+    charger_offres_baobab,
+    charger_offres_comptoir,
+    detecter_prix_suspects,
+    generer_journal_nettoyage,
+)
+from rapprochement import (
+    construire_index_catalogue,
+    trouver_produit_id,
+)
+from comparaison import (
+    comparer_offres,
+    calculer_synthese,
+    calculer_panier_rentree,
+)
+from historique import (
+    analyser_historique_prix,
+    mesurer_recherche,
+)
+from exportation import exporter_tous_les_fichiers
+from interface import (
     afficher_chargement,
-    afficher_demo_cours,
+    afficher_anomalies,
     afficher_comparaison,
     afficher_synthese,
     afficher_panier,
     afficher_historique,
-    afficher_anomalies,
     afficher_complexite,
     afficher_export,
     afficher_menu,
 )
 
 
-def executer_rapport_complet(controleur):
-    """Exécute toutes les étapes de l'analyse comparative et affiche les vues."""
-    # 0. Démonstration exacte des diapositives du cours (Boutiques A, B, C)
-    resultat_cours = controleur.analyser_demo_cours()
-    afficher_demo_cours(resultat_cours)
+def charger_et_rapprocher():
+    """Charge le catalogue de référence et les 3 enseignes, puis rapproche chaque article."""
+    debut = time.perf_counter()
 
-    # 1. Collecte, normalisation et rapprochement des 3 enseignes
-    catalogue, offres = controleur.charger_donnees()
+    catalogue = charger_catalogue(FICHIER_CATALOGUE)
+    index = construire_index_catalogue(catalogue)
+
+    offres = []
+    offres.extend(charger_offres_lagune(FICHIER_LAGUNE))
+    offres.extend(charger_offres_baobab(FICHIER_BAOBAB))
+    offres.extend(charger_offres_comptoir(FICHIER_COMPTOIR))
+
+    for offre in offres:
+        offre.produit_id = trouver_produit_id(offre.nom, index)
+
+    temps_chargement_ms = round((time.perf_counter() - debut) * 1000, 2)
+    return catalogue, offres, temps_chargement_ms
+
+
+def executer_rapport_complet():
+    """Exécute toutes les étapes de l'analyse comparative et exporte tous les résultats."""
+    catalogue, offres, temps_chargement_ms = charger_et_rapprocher()
     afficher_chargement(catalogue, offres)
 
-    # 2. Indexation et comparaison
-    rapport = controleur.comparer(catalogue, offres)
-    afficher_comparaison(rapport)
-
-    # 3. Synthèse et aide à la décision
-    synthese = controleur.calculer_synthese_marche(rapport)
-    afficher_synthese(rapport, synthese)
-
-    # 4. Simulation du panier de rentrée
-    resultat_panier = controleur.analyser_panier(catalogue, offres)
-    afficher_panier(resultat_panier)
-
-    # 5. Analyse de l'historique (20 876 lignes) et Black Friday
-    resultat_historique = controleur.analyser_historique()
-    resultat_benchmark = controleur.comparer_recherche_liste_et_dictionnaire(offres)
-    afficher_historique(resultat_historique)
-
-    # 6. Journal de nettoyage et gestion des pièges / anomalies
-    problemes = controleur.verifier_anomalies(offres)
-    journal = controleur.generer_journal(catalogue, offres)
+    problemes = detecter_prix_suspects(offres)
+    journal = generer_journal_nettoyage(catalogue, offres)
     afficher_anomalies(problemes, journal)
 
-    # 7. Analyse de complexité Big O et performances
+    debut_comp = time.perf_counter()
+    rapport = comparer_offres(catalogue, offres)
+    temps_comparaison_ms = round((time.perf_counter() - debut_comp) * 1000, 2)
+    afficher_comparaison(rapport)
+
+    synthese = calculer_synthese(rapport, NOMS_BOUTIQUES)
+    afficher_synthese(rapport, synthese)
+
+    resultat_panier = calculer_panier_rentree(
+        catalogue, offres, PANIER_RENTREE, NOMS_BOUTIQUES
+    )
+    afficher_panier(resultat_panier)
+
+    resultat_historique = analyser_historique_prix(FICHIER_HISTORIQUE)
+    resultat_benchmark = mesurer_recherche(offres, FICHIER_HISTORIQUE)
+    afficher_historique(resultat_historique)
+
     afficher_complexite(
-        controleur.temps_chargement_ms,
-        controleur.temps_comparaison_ms,
+        temps_chargement_ms,
+        temps_comparaison_ms,
         resultat_historique,
         resultat_benchmark,
     )
 
-    # 8. Export du comparatif CSV et du journal de nettoyage
-    chemin_fichier = controleur.exporter(rapport)
-    chemin_journal = controleur.exporter_journal(journal)
-    afficher_export(chemin_fichier, chemin_journal)
+    chemins = exporter_tous_les_fichiers(
+        catalogue,
+        offres,
+        rapport,
+        synthese,
+        resultat_panier,
+        resultat_historique,
+        journal,
+        resultat_benchmark,
+    )
+    afficher_export(chemins)
 
 
 def main():
-    """Pose une question à l'utilisateur puis exécute l'analyse choisie."""
-    controleur = ControleurComparateur()
-
+    """Programme principal avec menu console interactif."""
     if "--auto" in sys.argv or "--rapport" in sys.argv:
-        executer_rapport_complet(controleur)
+        executer_rapport_complet()
         return
 
     catalogue = None
     offres = None
     rapport = None
     synthese = None
+    temps_chargement_ms = 0.0
+    temps_comparaison_ms = 0.0
 
-    def preparer_comparaison():
-        nonlocal catalogue, offres, rapport, synthese
+    def preparer_donnees():
+        nonlocal catalogue, offres, rapport, synthese, temps_chargement_ms, temps_comparaison_ms
         if rapport is None:
-            catalogue, offres = controleur.charger_donnees()
-            rapport = controleur.comparer(catalogue, offres)
-            synthese = controleur.calculer_synthese_marche(rapport)
+            catalogue, offres, temps_chargement_ms = charger_et_rapprocher()
+            debut_comp = time.perf_counter()
+            rapport = comparer_offres(catalogue, offres)
+            temps_comparaison_ms = round((time.perf_counter() - debut_comp) * 1000, 2)
+            synthese = calculer_synthese(rapport, NOMS_BOUTIQUES)
         return catalogue, offres, rapport, synthese
 
     while True:
@@ -94,42 +145,57 @@ def main():
             print("\nFin du programme.")
             break
         elif choix == "1":
-            afficher_demo_cours(controleur.analyser_demo_cours())
-        elif choix == "2":
-            catalogue, offres, rapport, synthese = preparer_comparaison()
+            catalogue, offres, rapport, synthese = preparer_donnees()
             afficher_chargement(catalogue, offres)
-            afficher_comparaison(rapport)
-        elif choix == "3":
-            catalogue, offres, rapport, synthese = preparer_comparaison()
-            afficher_synthese(rapport, synthese)
-        elif choix == "4":
-            catalogue, offres, rapport, synthese = preparer_comparaison()
-            afficher_panier(controleur.analyser_panier(catalogue, offres))
-        elif choix == "5":
-            afficher_historique(controleur.analyser_historique())
-        elif choix == "6":
-            catalogue, offres, rapport, synthese = preparer_comparaison()
-            problemes = controleur.verifier_anomalies(offres)
-            journal = controleur.generer_journal(catalogue, offres)
+        elif choix == "2":
+            catalogue, offres, rapport, synthese = preparer_donnees()
+            problemes = detecter_prix_suspects(offres)
+            journal = generer_journal_nettoyage(catalogue, offres)
             afficher_anomalies(problemes, journal)
+        elif choix == "3":
+            catalogue, offres, rapport, synthese = preparer_donnees()
+            afficher_comparaison(rapport)
+        elif choix == "4":
+            catalogue, offres, rapport, synthese = preparer_donnees()
+            afficher_synthese(rapport, synthese)
+        elif choix == "5":
+            catalogue, offres, rapport, synthese = preparer_donnees()
+            afficher_panier(
+                calculer_panier_rentree(catalogue, offres, PANIER_RENTREE, NOMS_BOUTIQUES)
+            )
+        elif choix == "6":
+            afficher_historique(analyser_historique_prix(FICHIER_HISTORIQUE))
         elif choix == "7":
-            catalogue, offres, rapport, synthese = preparer_comparaison()
-            resultat_historique = controleur.analyser_historique()
-            resultat_benchmark = controleur.comparer_recherche_liste_et_dictionnaire(offres)
+            catalogue, offres, rapport, synthese = preparer_donnees()
+            resultat_historique = analyser_historique_prix(FICHIER_HISTORIQUE)
+            resultat_benchmark = mesurer_recherche(offres, FICHIER_HISTORIQUE)
             afficher_complexite(
-                controleur.temps_chargement_ms,
-                controleur.temps_comparaison_ms,
+                temps_chargement_ms,
+                temps_comparaison_ms,
                 resultat_historique,
                 resultat_benchmark,
             )
         elif choix == "8":
-            catalogue, offres, rapport, synthese = preparer_comparaison()
-            journal = controleur.generer_journal(catalogue, offres)
-            chemin_fichier = controleur.exporter(rapport)
-            chemin_journal = controleur.exporter_journal(journal)
-            afficher_export(chemin_fichier, chemin_journal)
+            catalogue, offres, rapport, synthese = preparer_donnees()
+            resultat_panier = calculer_panier_rentree(
+                catalogue, offres, PANIER_RENTREE, NOMS_BOUTIQUES
+            )
+            resultat_historique = analyser_historique_prix(FICHIER_HISTORIQUE)
+            journal = generer_journal_nettoyage(catalogue, offres)
+            resultat_benchmark = mesurer_recherche(offres, FICHIER_HISTORIQUE)
+            chemins = exporter_tous_les_fichiers(
+                catalogue,
+                offres,
+                rapport,
+                synthese,
+                resultat_panier,
+                resultat_historique,
+                journal,
+                resultat_benchmark,
+            )
+            afficher_export(chemins)
         elif choix == "9":
-            executer_rapport_complet(controleur)
+            executer_rapport_complet()
         else:
             print("\nJe n'ai pas reconnu ce numéro. Choisis un numéro affiché dans le menu.")
 

@@ -1,4 +1,29 @@
-from models.normalisation import normaliser_nom
+import re
+import unicodedata
+
+
+def normaliser_nom(nom):
+    """Normalisation complète pour le rapprochement multi-sources :
+    minuscules, suppression des accents, ponctuation et espaces multiples.
+    """
+    if nom is None:
+        return ""
+
+    nom = str(nom).lower().strip()
+
+    # Enlever les accents
+    nom = unicodedata.normalize("NFD", nom)
+    nom = "".join(
+        caractere
+        for caractere in nom
+        if unicodedata.category(caractere) != "Mn"
+    )
+
+    # Remplacer les signes de ponctuation par des espaces
+    nom = re.sub(r"[^a-z0-9]+", " ", nom)
+
+    # Supprimer les espaces en trop
+    return " ".join(nom.split())
 
 
 # Variantes des noms utilisées par les boutiques.
@@ -50,17 +75,17 @@ ALIAS_PRODUITS = {
 
 
 def construire_index_catalogue(catalogue):
+    """Construit un dictionnaire d'alias normalisés vers les produit_id (P01 à P30)."""
     index = {}
-
     for produit_id, alias_liste in ALIAS_PRODUITS.items():
         for alias in alias_liste:
             alias_nettoye = normaliser_nom(alias)
             index[alias_nettoye] = produit_id
-
     return index
 
 
 def trouver_produit_id(nom, index):
+    """Retrouve le produit_id correspondant à la désignation d'une enseigne."""
     nom_nettoye = normaliser_nom(nom)
     correspondances = []
 

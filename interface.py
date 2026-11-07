@@ -1,5 +1,5 @@
 from config import NOMS_BOUTIQUES
-from models.comparaison import calculer_synthese
+from comparaison import calculer_synthese, est_prix_exploitable
 
 
 def formater_fcfa(montant):
@@ -27,7 +27,7 @@ def afficher_chargement(catalogue, offres):
 
         disponibles = [
             offre for offre in associees
-            if offre.prix is not None and offre.disponible
+            if est_prix_exploitable(offre)
         ]
 
         print(
@@ -37,45 +37,43 @@ def afficher_chargement(catalogue, offres):
         )
 
 
-def afficher_demo_cours(resultat_cours):
-    """Affiche la sortie exacte de l'exemple des diapositives du cours
-    (boutique_a.csv, boutique_b.csv, boutique_c.csv - Séance 3).
-    """
+def afficher_anomalies(problemes, journal=None):
     print("\n" + "=" * 72)
-    print("  DÉMONSTRATION DU COURS (BOUTIQUES A, B, C — SÉANCE 3)")
+    print("  2. JOURNAL DE NETTOYAGE ET GESTION DES PIÈGES")
     print("=" * 72)
 
-    pieges = resultat_cours["pieges"]
-    if pieges["prix_manquants"] or pieges["source_unique"]:
-        print("Pièges détectés et traités automatiquement :")
-        for msg in pieges["prix_manquants"]:
-            print(f"  [Prix manquant]   {msg}")
-        for msg in pieges["source_unique"]:
-            print(f"  [Source unique]   {msg}")
-        print()
+    if journal is not None:
+        print(f"\n[Piège 1] Casse, accents, fautes de frappe et formatage ({len(journal.get('formatage_et_typos', []))}) :")
+        for msg in journal.get("formatage_et_typos", []):
+            print(f"  - {msg}")
 
-    print(
-        f"{'Produit':<28} | {'Meilleure':^9} | "
-        f"{'Prix min':>12} | {'Prix moy.':>12} | {'Écart':>8}"
-    )
-    print("-" * 78)
+        print(f"\n[Piège 2] Prix manquants ou non numériques ({len(journal['prix_manquants'])}) :")
+        for msg in journal["prix_manquants"]:
+            print(f"  - {msg}")
 
-    for r in resultat_cours["rapport"]:
-        prix_str = f"{r['prix_min']:,}".replace(",", " ")
-        moy_str = f"{r['prix_moyen']:,}".replace(",", " ")
-        ecart_str = f"{r['ecart_pct']} %".replace(".", ",")
-        print(
-            f"{r['produit']:<28} | {r['meilleure']:^9} | "
-            f"{prix_str:>12} | {moy_str:>12} | {ecart_str:>8}"
-        )
+        print(f"\n[Piège 3] Doublons détectés et filtrés ({len(journal['doublons'])}) :")
+        for msg in journal["doublons"]:
+            print(f"  - {msg}")
 
-    print("-" * 78)
-    print(resultat_cours["decision"])
+        print(f"\n[Piège 4] Articles en rupture de stock écartés ({len(journal['ruptures_stock'])}) :")
+        for msg in journal["ruptures_stock"]:
+            print(f"  - {msg}")
+
+        print(f"\n[Piège 5] Produits présents dans moins de 2 sources ({len(journal['source_unique'])}) :")
+        for msg in journal["source_unique"]:
+            print(f"  - {msg}")
+
+    print("\n[Piège 6] Prix suspects à vérifier (prix > ancien prix) :")
+    if not problemes:
+        print("  Aucun prix suspect détecté.")
+    else:
+        for probleme in problemes:
+            print(f"  - {probleme}")
 
 
 def afficher_comparaison(rapport):
     print("\n" + "=" * 72)
-    print("  2. COMPARER ET DÉCIDER — TABLEAU COMPARATIF DU MARCHÉ")
+    print("  3. COMPARER ET DÉCIDER — TABLEAU COMPARATIF DU MARCHÉ")
     print("=" * 72)
 
     if not rapport:
@@ -129,7 +127,7 @@ def afficher_synthese(rapport, synthese=None):
         synthese = calculer_synthese(rapport, NOMS_BOUTIQUES)
 
     print("\n" + "=" * 72)
-    print("  3. SYNTHÈSE DES PRIX ET AIDE À LA DÉCISION")
+    print("  4. SYNTHÈSE DES PRIX ET AIDE À LA DÉCISION")
     print("=" * 72)
 
     victoires = synthese["victoires"]
@@ -141,16 +139,9 @@ def afficher_synthese(rapport, synthese=None):
             f"écart moyen au prix le plus bas : {ecarts_moyens[boutique]:.1f} %"
         )
 
-    if "ecart_moyen_lagune_propre" in synthese:
-        print(
-            f"    (Note : hors erreur de saisie du Tecno Spark 20 à 779 000 FCFA, "
-            f"l'écart moyen de Marché Lagune est de "
-            f"{synthese['ecart_moyen_lagune_propre']:.1f} %)"
-        )
-
     print(f"\n>>> {synthese['decision']}")
 
-    print("\n--- Top 3 des produits où il y a le plus à gagner (en FCFA, données brutes) ---")
+    print("\n--- Top 3 des produits où il y a le plus à gagner (en FCFA) ---")
     for rang, produit in enumerate(synthese["top_3_fcfa"], 1):
         print(
             f"  {rang}. {produit['nom']} : économie de "
@@ -159,15 +150,13 @@ def afficher_synthese(rapport, synthese=None):
             f"{produit['meilleure_boutique']}"
         )
 
-    if "top_3_fcfa_propre" in synthese:
-        print("\n--- Top 3 des produits où il y a le plus à gagner (hors prix aberrant P04) ---")
-        for rang, produit in enumerate(synthese["top_3_fcfa_propre"], 1):
-            print(
-                f"  {rang}. {produit['nom']} : économie de "
-                f"{formater_fcfa(produit['ecart_fcfa'])} "
-                f"({produit['ecart_pct']} %) chez "
-                f"{produit['meilleure_boutique']}"
-            )
+    print("\n--- Top 3 des produits où il y a le plus à gagner (en %) ---")
+    for rang, produit in enumerate(synthese["top_3_pct"], 1):
+        print(
+            f"  {rang}. {produit['nom']} : {produit['ecart_pct']} % "
+            f"({formater_fcfa(produit['ecart_fcfa'])}) chez "
+            f"{produit['meilleure_boutique']}"
+        )
 
     print("\n--- Les 10 plus grands écarts en pourcentage ---")
     for produit in synthese["top_10_pct"]:
@@ -179,7 +168,7 @@ def afficher_synthese(rapport, synthese=None):
 
 def afficher_panier(resultat_panier):
     print("\n" + "=" * 72)
-    print("  4. SIMULATION DU PANIER DE RENTRÉE")
+    print("  5. SIMULATION DU PANIER DE RENTRÉE")
     print("=" * 72)
     print(
         "Composition : 1 Tecno Spark 20 (P04), 1 Lenovo IdeaPad 3 (P12), "
@@ -192,11 +181,6 @@ def afficher_panier(resultat_panier):
         complet = resultat_panier["complet_par_boutique"][boutique]
         statut = "Complet" if complet else "Incomplet"
         print(f"  - {boutique:<16} : {formater_fcfa(total):>15} ({statut})")
-        if boutique == "Marché Lagune" and total > 1000000:
-            print(
-                "    (Note : inclut le prix suspect de 779 000 FCFA sur P04 ; "
-                "avec le tarif corrigé de 77 900 FCFA, le panier vaudrait 504 300 FCFA)"
-            )
 
     print("\n--- Panier optimisé (achat de chaque article au meilleur prix) ---")
     for item in resultat_panier["articles_optimaux"]:
@@ -225,7 +209,7 @@ def afficher_panier(resultat_panier):
 
 def afficher_historique(resultat_historique):
     print("\n" + "=" * 72)
-    print("  5. ANALYSE DE L'HISTORIQUE DES PRIX & BLACK FRIDAY")
+    print("  6. ANALYSE DE L'HISTORIQUE DES PRIX & BLACK FRIDAY")
     print("=" * 72)
     print(
         f"Lignes analysées en une seule lecture : "
@@ -255,39 +239,6 @@ def afficher_historique(resultat_historique):
         )
 
     print(f"\nConclusion : {resultat_historique['recommandation']}")
-
-
-def afficher_anomalies(problemes, journal=None):
-    print("\n" + "=" * 72)
-    print("  6. JOURNAL DE NETTOYAGE ET GESTION DES PIÈGES")
-    print("=" * 72)
-
-    if journal is not None:
-        print(f"\n[Piège 1] Casse, accents et espaces multiples :")
-        print("  -> Normalisés automatiquement (minuscules, espaces nettoyés).")
-
-        print(f"\n[Piège 2] Prix manquants ou non numériques ({len(journal['prix_manquants'])}) :")
-        for msg in journal["prix_manquants"]:
-            print(f"  - {msg}")
-
-        print(f"\n[Piège 3] Doublons détectés et filtrés ({len(journal['doublons'])}) :")
-        for msg in journal["doublons"]:
-            print(f"  - {msg}")
-
-        print(f"\n[Piège 4] Articles en rupture de stock écartés ({len(journal['ruptures_stock'])}) :")
-        for msg in journal["ruptures_stock"]:
-            print(f"  - {msg}")
-
-        print(f"\n[Piège 5] Produits présents dans moins de 2 sources ({len(journal['source_unique'])}) :")
-        for msg in journal["source_unique"]:
-            print(f"  - {msg}")
-
-    print("\n[Piège 6] Prix suspects à vérifier (prix > ancien prix) :")
-    if not problemes:
-        print("  Aucun prix suspect détecté.")
-    else:
-        for probleme in problemes:
-            print(f"  - {probleme}")
 
 
 def afficher_complexite(
@@ -353,27 +304,37 @@ def afficher_complexite(
     print("  3. Tri final du rapport -> Complexité O(K log K) avec Timsort :")
     print("     Où K est le nombre de produits comparables (K <= 30).")
 
-def afficher_export(chemin_fichier, chemin_journal=None):
+
+def afficher_export(chemins, chemin_journal=None):
     print("\n" + "=" * 72)
-    print(f"  EXPORT CSV (Pandas) : {chemin_fichier}")
-    if chemin_journal:
-        print(f"  EXPORT JOURNAL      : {chemin_journal}")
+    print("  8. FICHIERS GÉNÉRÉS DANS LE DOSSIER resultats/")
+    print("=" * 72)
+    if isinstance(chemins, dict):
+        print(f"  - black_friday.csv      : {chemins['black_friday']}")
+        print(f"  - comparatif.csv        : {chemins['comparatif']}")
+        print(f"  - journal_nettoyage.csv : {chemins['journal_nettoyage']}")
+        print(f"  - panier.csv            : {chemins['panier']}")
+        print(f"  - rapprochement.csv     : {chemins['rapprochement']}")
+        print(f"  - rapport.md            : {chemins['rapport_md']}")
+    else:
+        print(f"  EXPORT CSV : {chemins}")
+        if chemin_journal:
+            print(f"  EXPORT JOURNAL : {chemin_journal}")
     print("=" * 72)
 
 
 def afficher_menu():
     print("\n" + "=" * 72)
-    print("  MENU APPLICATION CONSOLE — ANALYSE COMPARATIVE DE MARCHÉ (MVC)")
+    print("  ANALYSE COMPARATIVE DE MARCHÉ")
     print("=" * 72)
-    print("  1. Exécuter la démonstration du cours (Boutiques A, B, C - Séance 3)")
-    print("  2. Afficher le chargement et le tableau comparatif complet")
-    print("  3. Afficher la synthèse des prix, la décision et les Top écarts")
-    print("  4. Calculer le Panier de rentrée (par boutique et panier optimal)")
-    print("  5. Analyser l'historique des prix (20 876 lignes) & Black Friday")
-    print("  6. Consulter le journal de nettoyage et des pièges / anomalies")
-    print("  7. Afficher l'analyse de complexité Big O et les temps d'exécution")
-    print("  8. Enregistrer les résultats (CSV et journal d'anomalies)")
-    print("  9. Tout afficher (Rapport complet de A à Z)")
-    print("  0. Quitter")
+    print("  [1] Chargement et rapprochement des 3 catalogues")
+    print("  [2] Journal de nettoyage et détection des anomalies")
+    print("  [3] Tableau comparatif des prix")
+    print("  [4] Synthèse des prix et Top 3 des gains")
+    print("  [5] Panier de rentrée (par enseigne et panier optimisé)")
+    print("  [6] Historique des prix (20 876 lignes) et Black Friday")
+    print("  [7] Complexité algorithmique (Big O) et temps d'exécution")
+    print("  [8] Exporter les résultats dans resultats/")
+    print("  [9] Tout afficher (Rapport complet)")
+    print("  [0] Quitter")
     print("=" * 72)
-

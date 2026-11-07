@@ -2,78 +2,52 @@
 
 ## Présentation
 
-Ce projet est une application console Python qui compare les prix de produits vendus par trois boutiques. Elle lit des catalogues de formats différents, rapproche les noms des produits et indique où les prix sont les plus bas.
+Ce projet est une application console Python qui compare les prix de produits d'électronique et d'électroménager vendus par trois enseignes à Abidjan (**Marché Lagune**, **Baobab Shop**, **Comptoir Ivoire**). Elle collecte des catalogues de formats différents (CSV, JSON, Excel), nettoie et journalise les anomalies, rapproche les désignations du catalogue de référence (`P01` à `P30`), compare les prix, calcule le coût du panier de rentrée, analyse l'historique annuel des prix (`20 876` lignes) autour du Black Friday et évalue la complexité algorithmique (Big O).
 
 ## Arborescence du projet
 
 ```text
 analyse comparative marche/
-├── controllers/
-│   └── controleur.py
-├── donnees/
-│   ├── baobab_shop.json
-│   ├── boutique_a.csv
-│   ├── boutique_b.csv
-│   ├── boutique_c.csv
-│   ├── catalogue_reference.csv
-│   ├── comptoir_ivoire.xlsx
-│   ├── historique_prix.csv
-│   └── marche_lagune.csv
-├── models/
-│   ├── anomalies.py
-│   ├── benchmark.py
-│   ├── catalogue.py
-│   ├── comparaison.py
-│   ├── exportation.py
-│   ├── historique.py
-│   ├── lecteur_baobab.py
-│   ├── lecteur_comptoir.py
-│   ├── lecteur_lagune.py
-│   ├── normalisation.py
-│   ├── offre.py
-│   ├── panier.py
-│   ├── prix.py
-│   ├── produit.py
-│   └── rapprochement.py
-├── resultats/
-│   ├── comparatif_prix.csv
-│   └── journal_anomalies.txt
-├── views/
-│   └── console.py
-├── .gitignore
+├── chargement.py
+├── comparaison.py
 ├── config.py
-├── LISEZ-MOI.md
-├── main.py
+├── exportation.py
+├── historique.py
+├── interface.py
+├── rapprochement.py
+├── donnees/
+│   ├── comptoir_ivoire.xlsx
+│   ├── catalogue_reference.csv
+│   ├── historique_prix.csv
+│   ├── marche_lagune.csv
+│   └── baobab_shop.json
+├── resultats/
+│   ├── black_friday.csv
+│   ├── comparatif.csv
+│   ├── journal_nettoyage.csv
+│   ├── panier.csv
+│   ├── rapprochement.csv
+│   └── rapport.md
+├── .gitignore
 ├── README.md
-├── RECHERCHE_COMPLEXITE.md
+├── main.py
 └── requirements.txt
 ```
 
-## Sources de données
+## Organisation des modules
 
-Les données proviennent de trois boutiques :
-
-- **Marché Lagune** : fichier CSV.
-- **Baobab Shop** : fichier JSON.
-- **Comptoir Ivoire** : fichier Excel.
-
-Le projet contient aussi un catalogue de référence de 30 produits, trois fichiers de démonstration du cours et un historique de prix.
-
-## Fonctionnalités
-
-Le programme :
-
-- lit les fichiers CSV, JSON et Excel ;
-- normalise les noms et rapproche les produits avec le catalogue de référence ;
-- compare les prix disponibles et indique la boutique la moins chère ;
-- calcule les prix moyens et les écarts en FCFA et en pourcentage ;
-- analyse un panier et l’historique des prix ;
-- signale les prix suspects et les autres anomalies ;
-- mesure certains temps d’exécution et présente leur complexité algorithmique.
+- **`config.py`** : centralisation des chemins de fichiers, de la composition du panier de rentrée et des dates du Black Friday.
+- **`chargement.py`** : lecture du catalogue de référence et des 3 sources (`CSV`, `JSON`, `Excel`), conversion des prix et génération du journal de nettoyage.
+- **`rapprochement.py`** : normalisation des chaînes de caractères et association de chaque article d'enseigne à son `produit_id` (`P01` à `P30`).
+- **`comparaison.py`** : filtrage des offres exploitables, calcul du comparatif des prix, de la synthèse par enseigne, du Top 3 des gains et du panier de rentrée.
+- **`historique.py`** : analyse en une seule lecture ($O(N)$) des `20 876` lignes de `historique_prix.csv` (Black Friday vs moyenne annuelle) et benchmark de complexité Big O ($O(N \times Q)$ par liste vs $O(N + Q)$ par dictionnaire).
+- **`exportation.py`** : génération des 6 fichiers de résultats (`black_friday.csv`, `comparatif.csv`, `journal_nettoyage.csv`, `panier.csv`, `rapprochement.csv`, `rapport.md`) dans `resultats/`.
+- **`interface.py`** : affichage dans la console et menu interactif.
+- **`main.py`** : point d'entrée principal du programme.
 
 ## Lancer le programme
 
-Dans le terminal PowerShell de VS Code, place-toi dans le dossier principal du projet. Si l'environnement virtuel n'existe pas encore, crée-le et installe les dépendances :
+Dans le terminal PowerShell de VS Code, placez-vous dans le dossier du projet :
 
 ```powershell
 python -m venv .venv
@@ -81,28 +55,14 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-Puis lance l'application :
+Puis lancez l'application console interactive :
 
 ```powershell
 python main.py
 ```
 
-Le menu te demande le numéro de l'action à exécuter. Tu peux choisir une autre action quand le menu revient ; entre `0` pour quitter. L'option `9` lance toutes les analyses et les exports. Pour lancer le rapport complet directement, sans menu, utilise :
+Pour exécuter directement toutes les analyses et générer tous les fichiers sans passer par le menu :
 
 ```powershell
 python main.py --auto
 ```
-
-## Résultats
-
-Les fichiers générés sont rangés dans `resultats/` :
-
-- `comparatif_prix.csv` : résultats de la comparaison des prix ;
-- `journal_anomalies.txt` : anomalies détectées pendant le traitement.
-
-## Organisation MVC
-
-- `models/` : données et traitements ;
-- `views/` : affichage des résultats dans la console ;
-- `controllers/` : coordination des traitements ;
-- `main.py` : point de départ du programme.

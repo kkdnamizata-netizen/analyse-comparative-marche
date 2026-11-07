@@ -1,0 +1,27 @@
+﻿type_anomalie,enseigne,produit_id,article,detail
+Espaces et casse,Marché Lagune,P16,  souris sans fil logitech m185 ,Espaces superflus et minuscules nettoyés -> rapproché de P16
+Faute de frappe (nom),Comptoir Ivoire,P01,Samsun Galaxy A15 128Go,Coquille sur la marque ('Samsun') corrigée par rapprochement -> P01
+Format de prix texte,Comptoir Ivoire,P24,Clim LG 1CV,Prix stocké en texte ('279 300') dans Excel -> converti en entier (279300 FCFA)
+Rupture de stock,Marché Lagune,P01,SAMSUNG GALAXY A15 (128GB),Stock épuisé (102900 FCFA) -> article écarté
+Rupture de stock,Marché Lagune,P03,SAMSUNG GALAXY A55 (256GB),Stock épuisé (288100 FCFA) -> article écarté
+Prix suspect,Marché Lagune,P04,TECNO SPARK 20 - 128GB,Prix affiché (779000 FCFA) > ancien prix (88700 FCFA)
+Rupture de stock,Marché Lagune,P08,ITEL A70 64GB,Stock épuisé (45700 FCFA) -> article écarté
+Doublon,Marché Lagune,P01,SAMSUNG GALAXY A15 (128GB),Ligne dupliquée ignorée
+Rupture de stock,Marché Lagune,P13,PC PORTABLE DELL INSPIRON 15 I5 16GB/512GB,Stock épuisé (442900 FCFA) -> article écarté
+Prix manquant ou non numérique,Marché Lagune,P19,"ECRAN SAMSUNG 24""",Prix absent ou texte ('Prix sur demande') -> ligne ignorée
+Rupture de stock,Marché Lagune,P23,"TV HISENSE 32""",Stock épuisé (97300 FCFA) -> article écarté
+Prix manquant ou non numérique,Marché Lagune,P26,MIXEUR MOULINEX 1.5L,Prix absent ou texte ('Prix sur demande') -> ligne ignorée
+Doublon,Marché Lagune,P23,"TV HISENSE 32""",Ligne dupliquée ignorée
+Rupture de stock,Baobab Shop,P03,Galaxy A55 256GB - Samsung,Stock épuisé (273800 FCFA) -> article écarté
+Rupture de stock,Baobab Shop,P16,Logitech M185 Wireless Mouse,Stock épuisé (10200 FCFA) -> article écarté
+Prix manquant ou non numérique,Baobab Shop,P27,Philips Steam Iron,Prix absent ou texte ('Prix sur demande') -> ligne ignorée
+Rupture de stock,Baobab Shop,P30,Hisense Air Conditioner 1.5HP,Stock épuisé (287100 FCFA) -> article écarté
+Rupture de stock,Comptoir Ivoire,P22,"TV Samsung 43""",Stock épuisé (241300 FCFA) -> article écarté
+Rupture de stock,Comptoir Ivoire,P25,"Ventilo Binatone 16""",Stock épuisé (23700 FCFA) -> article écarté
+Source unique / Non comparable,Toutes,P03,P03 - Samsung Galaxy A55 256 Go : aucune offre disponible (produit écarté de l'analyse),Moins de 2 enseignes disponibles -> produit écarté
+Source unique / Non comparable,Toutes,P08,"P08 - Itel A70 64 Go : disponible uniquement chez Comptoir Ivoire (rien à comparer, produit écarté)",Moins de 2 enseignes disponibles -> produit écarté
+Source unique / Non comparable,Toutes,P13,"P13 - Dell Inspiron 15 Core i5 16 Go 512 Go : disponible uniquement chez Comptoir Ivoire (rien à comparer, produit écarté)",Moins de 2 enseignes disponibles -> produit écarté
+Source unique / Non comparable,Toutes,P18,"P18 - Routeur TP-Link Archer C6 : disponible uniquement chez Baobab Shop (rien à comparer, produit écarté)",Moins de 2 enseignes disponibles -> produit écarté
+Source unique / Non comparable,Toutes,P19,"P19 - Écran Samsung 24 pouces : disponible uniquement chez Baobab Shop (rien à comparer, produit écarté)",Moins de 2 enseignes disponibles -> produit écarté
+Source unique / Non comparable,Toutes,P25,"P25 - Ventilateur sur pied Binatone 16 pouces : disponible uniquement chez Marché Lagune (rien à comparer, produit écarté)",Moins de 2 enseignes disponibles -> produit écarté
+Source unique / Non comparable,Toutes,P30,"P30 - Climatiseur Hisense 1,5 CV : disponible uniquement chez Marché Lagune (rien à comparer, produit écarté)",Moins de 2 enseignes disponibles -> produit écarté

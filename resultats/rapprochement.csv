@@ -1,0 +1,79 @@
+﻿enseigne,designation_source,nom_normalise,produit_id,nom_catalogue,categorie,marque,prix_fcfa,disponible
+Marché Lagune,SAMSUNG GALAXY A15 (128GB),samsung galaxy a15 128gb,P01,Samsung Galaxy A15 128 Go,Smartphone,Samsung,102900,Non
+Marché Lagune,SAMSUNG GALAXY A25 (128GB),samsung galaxy a25 128gb,P02,Samsung Galaxy A25 128 Go,Smartphone,Samsung,151500,Oui
+Marché Lagune,SAMSUNG GALAXY A55 (256GB),samsung galaxy a55 256gb,P03,Samsung Galaxy A55 256 Go,Smartphone,Samsung,288100,Non
+Marché Lagune,TECNO SPARK 20 - 128GB,tecno spark 20 128gb,P04,Tecno Spark 20 128 Go,Smartphone,Tecno,779000,Oui
+Marché Lagune,TECNO CAMON 30 - 256GB,tecno camon 30 256gb,P05,Tecno Camon 30 256 Go,Smartphone,Tecno,136900,Oui
+Marché Lagune,INFINIX HOT 40I 128GB,infinix hot 40i 128gb,P06,Infinix Hot 40i 128 Go,Smartphone,Infinix,69200,Oui
+Marché Lagune,INFINIX NOTE 40 256GB,infinix note 40 256gb,P07,Infinix Note 40 256 Go,Smartphone,Infinix,132400,Oui
+Marché Lagune,ITEL A70 64GB,itel a70 64gb,P08,Itel A70 64 Go,Smartphone,Itel,45700,Non
+Marché Lagune,IPHONE 13 128GB,iphone 13 128gb,P09,Apple iPhone 13 128 Go,Smartphone,Apple,433700,Oui
+Marché Lagune,XIAOMI REDMI NOTE 13 128GB,xiaomi redmi note 13 128gb,P10,Xiaomi Redmi Note 13 128 Go,Smartphone,Xiaomi,136900,Oui
+Marché Lagune,PC PORTABLE HP 250 G9 I5 8GB/512GB,pc portable hp 250 g9 i5 8gb 512gb,P11,HP 250 G9 Core i5 8 Go 512 Go,Informatique,HP,390800,Oui
+Marché Lagune,PC PORTABLE LENOVO IDEAPAD 3 I3 8GB/256GB,pc portable lenovo ideapad 3 i3 8gb 256gb,P12,Lenovo IdeaPad 3 Core i3 8 Go 256 Go,Informatique,Lenovo,309400,Oui
+Marché Lagune,SAMSUNG GALAXY A15 (128GB),samsung galaxy a15 128gb,P01,Samsung Galaxy A15 128 Go,Smartphone,Samsung,102900,Non
+Marché Lagune,PC PORTABLE DELL INSPIRON 15 I5 16GB/512GB,pc portable dell inspiron 15 i5 16gb 512gb,P13,Dell Inspiron 15 Core i5 16 Go 512 Go,Informatique,Dell,442900,Non
+Marché Lagune,CLE USB SANDISK 64GB,cle usb sandisk 64gb,P14,Clé USB SanDisk 64 Go,Informatique,SanDisk,6100,Oui
+Marché Lagune,DISQUE DUR EXTERNE SEAGATE 1TB,disque dur externe seagate 1tb,P15,Disque dur externe Seagate 1 To,Informatique,Seagate,37600,Oui
+Marché Lagune,  souris sans fil logitech m185 ,souris sans fil logitech m185,P16,Souris sans fil Logitech M185,Informatique,Logitech,9200,Oui
+Marché Lagune,IMPRIMANTE HP DESKJET 2720E,imprimante hp deskjet 2720e,P17,Imprimante HP DeskJet 2720e,Informatique,HP,44000,Oui
+Marché Lagune,"ECRAN SAMSUNG 24""",ecran samsung 24,P19,Écran Samsung 24 pouces,Informatique,Samsung,,Oui
+Marché Lagune,REFRIGERATEUR HISENSE 205L,refrigerateur hisense 205l,P20,Réfrigérateur Hisense 205 L,Électroménager,Hisense,186100,Oui
+Marché Lagune,CONGELATEUR NASCO 200L,congelateur nasco 200l,P21,Congélateur Nasco 200 L,Électroménager,Nasco,176000,Oui
+Marché Lagune,"TV SAMSUNG 43"" CRYSTAL UHD 4K",tv samsung 43 crystal uhd 4k,P22,TV Samsung 43 pouces Crystal UHD,Électroménager,Samsung,251100,Oui
+Marché Lagune,"TV HISENSE 32""",tv hisense 32,P23,TV Hisense 32 pouces,Électroménager,Hisense,97300,Non
+Marché Lagune,CLIMATISEUR LG 1CV,climatiseur lg 1cv,P24,Climatiseur LG 1 CV,Électroménager,LG,256600,Oui
+Marché Lagune,"VENTILATEUR BINATONE 16""",ventilateur binatone 16,P25,Ventilateur sur pied Binatone 16 pouces,Électroménager,Binatone,21800,Oui
+Marché Lagune,MIXEUR MOULINEX 1.5L,mixeur moulinex 1 5l,P26,"Mixeur Moulinex 1,5 L",Électroménager,Moulinex,,Non
+Marché Lagune,FER A REPASSER PHILIPS,fer a repasser philips,P27,Fer à repasser Philips,Électroménager,Philips,15700,Oui
+Marché Lagune,MICRO-ONDES SAMSUNG 23L,micro ondes samsung 23l,P28,Micro-ondes Samsung 23 L,Électroménager,Samsung,67200,Oui
+Marché Lagune,CLIMATISEUR HISENSE 1.5CV,climatiseur hisense 1 5cv,P30,"Climatiseur Hisense 1,5 CV",Électroménager,Hisense,309700,Oui
+Marché Lagune,"TV HISENSE 32""",tv hisense 32,P23,TV Hisense 32 pouces,Électroménager,Hisense,97300,Non
+Baobab Shop,Galaxy A15 128GB - Samsung,galaxy a15 128gb samsung,P01,Samsung Galaxy A15 128 Go,Smartphone,Samsung,104000,Oui
+Baobab Shop,Galaxy A25 128GB - Samsung,galaxy a25 128gb samsung,P02,Samsung Galaxy A25 128 Go,Smartphone,Samsung,142000,Oui
+Baobab Shop,Galaxy A55 256GB - Samsung,galaxy a55 256gb samsung,P03,Samsung Galaxy A55 256 Go,Smartphone,Samsung,273800,Non
+Baobab Shop,Spark 20 128GB - Tecno,spark 20 128gb tecno,P04,Tecno Spark 20 128 Go,Smartphone,Tecno,75000,Oui
+Baobab Shop,Camon 30 256GB - Tecno,camon 30 256gb tecno,P05,Tecno Camon 30 256 Go,Smartphone,Tecno,135400,Oui
+Baobab Shop,Hot 40i 128GB - Infinix,hot 40i 128gb infinix,P06,Infinix Hot 40i 128 Go,Smartphone,Infinix,69500,Oui
+Baobab Shop,Note 40 256GB - Infinix,note 40 256gb infinix,P07,Infinix Note 40 256 Go,Smartphone,Infinix,132700,Oui
+Baobab Shop,iPhone 13 128GB - Apple,iphone 13 128gb apple,P09,Apple iPhone 13 128 Go,Smartphone,Apple,417200,Oui
+Baobab Shop,Redmi Note 13 128GB - Xiaomi,redmi note 13 128gb xiaomi,P10,Xiaomi Redmi Note 13 128 Go,Smartphone,Xiaomi,134100,Oui
+Baobab Shop,"HP Laptop 250 G9 (i5, 8GB, 512GB SSD)",hp laptop 250 g9 i5 8gb 512gb ssd,P11,HP 250 G9 Core i5 8 Go 512 Go,Informatique,HP,354200,Oui
+Baobab Shop,"Lenovo IdeaPad 3 (i3, 8GB, 256GB SSD)",lenovo ideapad 3 i3 8gb 256gb ssd,P12,Lenovo IdeaPad 3 Core i3 8 Go 256 Go,Informatique,Lenovo,298200,Oui
+Baobab Shop,SanDisk Ultra USB 64GB,sandisk ultra usb 64gb,P14,Clé USB SanDisk 64 Go,Informatique,SanDisk,7300,Oui
+Baobab Shop,Seagate Expansion 1TB,seagate expansion 1tb,P15,Disque dur externe Seagate 1 To,Informatique,Seagate,38300,Oui
+Baobab Shop,Logitech M185 Wireless Mouse,logitech m185 wireless mouse,P16,Souris sans fil Logitech M185,Informatique,Logitech,10200,Non
+Baobab Shop,HP DeskJet 2720e Printer,hp deskjet 2720e printer,P17,Imprimante HP DeskJet 2720e,Informatique,HP,45700,Oui
+Baobab Shop,TP-Link Archer C6 AC1200,tp link archer c6 ac1200,P18,Routeur TP-Link Archer C6,Informatique,TP-Link,28800,Oui
+Baobab Shop,"Samsung 24"" Monitor",samsung 24 monitor,P19,Écran Samsung 24 pouces,Informatique,Samsung,90800,Oui
+Baobab Shop,Hisense Fridge 205L,hisense fridge 205l,P20,Réfrigérateur Hisense 205 L,Électroménager,Hisense,183000,Oui
+Baobab Shop,"Samsung 43"" Crystal UHD TV",samsung 43 crystal uhd tv,P22,TV Samsung 43 pouces Crystal UHD,Électroménager,Samsung,244400,Oui
+Baobab Shop,"Hisense 32"" TV",hisense 32 tv,P23,TV Hisense 32 pouces,Électroménager,Hisense,96000,Oui
+Baobab Shop,LG Air Conditioner 1HP,lg air conditioner 1hp,P24,Climatiseur LG 1 CV,Électroménager,LG,253300,Oui
+Baobab Shop,Moulinex Blender 1.5L,moulinex blender 1 5l,P26,"Mixeur Moulinex 1,5 L",Électroménager,Moulinex,30900,Oui
+Baobab Shop,Philips Steam Iron,philips steam iron,P27,Fer à repasser Philips,Électroménager,Philips,,Oui
+Baobab Shop,Samsung Microwave 23L,samsung microwave 23l,P28,Micro-ondes Samsung 23 L,Électroménager,Samsung,65400,Oui
+Baobab Shop,Electric Kettle 1.7L,electric kettle 1 7l,P29,"Bouilloire électrique 1,7 L",Électroménager,Binatone,11600,Oui
+Baobab Shop,Hisense Air Conditioner 1.5HP,hisense air conditioner 1 5hp,P30,"Climatiseur Hisense 1,5 CV",Électroménager,Hisense,287100,Non
+Comptoir Ivoire,Samsun Galaxy A15 128Go,samsun galaxy a15 128go,P01,Samsung Galaxy A15 128 Go,Smartphone,Samsung,92990,Oui
+Comptoir Ivoire,Samsung A25 128Go,samsung a25 128go,P02,Samsung Galaxy A25 128 Go,Smartphone,Samsung,150300,Oui
+Comptoir Ivoire,Tecno Spark 20,tecno spark 20,P04,Tecno Spark 20 128 Go,Smartphone,Tecno,76300,Oui
+Comptoir Ivoire,Infinix Hot 40i,infinix hot 40i,P06,Infinix Hot 40i 128 Go,Smartphone,Infinix,67165,Oui
+Comptoir Ivoire,Itel A70,itel a70,P08,Itel A70 64 Go,Smartphone,Itel,42940,Oui
+Comptoir Ivoire,iPhone 13 128Go,iphone 13 128go,P09,Apple iPhone 13 128 Go,Smartphone,Apple,443700,Oui
+Comptoir Ivoire,HP 250 G9 i5,hp 250 g9 i5,P11,HP 250 G9 Core i5 8 Go 512 Go,Informatique,HP,407000,Oui
+Comptoir Ivoire,Lenovo IdeaPad 3 i3,lenovo ideapad 3 i3,P12,Lenovo IdeaPad 3 Core i3 8 Go 256 Go,Informatique,Lenovo,287375,Oui
+Comptoir Ivoire,Dell Inspiron 15 i5,dell inspiron 15 i5,P13,Dell Inspiron 15 Core i5 16 Go 512 Go,Informatique,Dell,406260,Oui
+Comptoir Ivoire,Clé USB SanDisk 64Go,cle usb sandisk 64go,P14,Clé USB SanDisk 64 Go,Informatique,SanDisk,6200,Oui
+Comptoir Ivoire,DD externe Seagate 1To,dd externe seagate 1to,P15,Disque dur externe Seagate 1 To,Informatique,Seagate,39500,Oui
+Comptoir Ivoire,Souris Logitech M185,souris logitech m185,P16,Souris sans fil Logitech M185,Informatique,Logitech,9200,Oui
+Comptoir Ivoire,Frigo Hisense 205L,frigo hisense 205l,P20,Réfrigérateur Hisense 205 L,Électroménager,Hisense,168385,Oui
+Comptoir Ivoire,Congélateur Nasco 200L,congelateur nasco 200l,P21,Congélateur Nasco 200 L,Électroménager,Nasco,151725,Oui
+Comptoir Ivoire,"TV Samsung 43""",tv samsung 43,P22,TV Samsung 43 pouces Crystal UHD,Électroménager,Samsung,241300,Non
+Comptoir Ivoire,"TV Hisense 32""",tv hisense 32,P23,TV Hisense 32 pouces,Électroménager,Hisense,88740,Oui
+Comptoir Ivoire,Clim LG 1CV,clim lg 1cv,P24,Climatiseur LG 1 CV,Électroménager,LG,279300,Oui
+Comptoir Ivoire,"Ventilo Binatone 16""",ventilo binatone 16,P25,Ventilateur sur pied Binatone 16 pouces,Électroménager,Binatone,23700,Non
+Comptoir Ivoire,Mixeur Moulinex,mixeur moulinex,P26,"Mixeur Moulinex 1,5 L",Électroménager,Moulinex,29200,Oui
+Comptoir Ivoire,Fer Philips,fer philips,P27,Fer à repasser Philips,Électroménager,Philips,15700,Oui
+Comptoir Ivoire,Micro-ondes Samsung 23L,micro ondes samsung 23l,P28,Micro-ondes Samsung 23 L,Électroménager,Samsung,68500,Oui
+Comptoir Ivoire,"Bouilloire 1,7L",bouilloire 1 7l,P29,"Bouilloire électrique 1,7 L",Électroménager,Binatone,9200,Oui

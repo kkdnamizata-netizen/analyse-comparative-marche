@@ -1,0 +1,25 @@
+﻿mode,enseigne,produit_id,nom,quantite,prix_unitaire_fcfa,sous_total_fcfa
+Panier par enseigne,Marché Lagune,P04,Tecno Spark 20 128 Go,1,,
+Panier par enseigne,Marché Lagune,P12,Lenovo IdeaPad 3 Core i3 8 Go 256 Go,1,309400,309400
+Panier par enseigne,Marché Lagune,P14,Clé USB SanDisk 64 Go,2,6100,12200
+Panier par enseigne,Marché Lagune,P15,Disque dur externe Seagate 1 To,1,37600,37600
+Panier par enseigne,Marché Lagune,P28,Micro-ondes Samsung 23 L,1,67200,67200
+TOTAL ENSEIGNE,Marché Lagune,,TOTAL PANIER,,,426400
+Panier par enseigne,Baobab Shop,P04,Tecno Spark 20 128 Go,1,75000,75000
+Panier par enseigne,Baobab Shop,P12,Lenovo IdeaPad 3 Core i3 8 Go 256 Go,1,298200,298200
+Panier par enseigne,Baobab Shop,P14,Clé USB SanDisk 64 Go,2,7300,14600
+Panier par enseigne,Baobab Shop,P15,Disque dur externe Seagate 1 To,1,38300,38300
+Panier par enseigne,Baobab Shop,P28,Micro-ondes Samsung 23 L,1,65400,65400
+TOTAL ENSEIGNE,Baobab Shop,,TOTAL PANIER,,,491500
+Panier par enseigne,Comptoir Ivoire,P04,Tecno Spark 20 128 Go,1,76300,76300
+Panier par enseigne,Comptoir Ivoire,P12,Lenovo IdeaPad 3 Core i3 8 Go 256 Go,1,287375,287375
+Panier par enseigne,Comptoir Ivoire,P14,Clé USB SanDisk 64 Go,2,6200,12400
+Panier par enseigne,Comptoir Ivoire,P15,Disque dur externe Seagate 1 To,1,39500,39500
+Panier par enseigne,Comptoir Ivoire,P28,Micro-ondes Samsung 23 L,1,68500,68500
+TOTAL ENSEIGNE,Comptoir Ivoire,,TOTAL PANIER,,,484075
+Panier optimisé (multi-enseignes),Baobab Shop,P04,Tecno Spark 20 128 Go,1,75000,75000
+Panier optimisé (multi-enseignes),Comptoir Ivoire,P12,Lenovo IdeaPad 3 Core i3 8 Go 256 Go,1,287375,287375
+Panier optimisé (multi-enseignes),Marché Lagune,P14,Clé USB SanDisk 64 Go,2,6100,12200
+Panier optimisé (multi-enseignes),Marché Lagune,P15,Disque dur externe Seagate 1 To,1,37600,37600
+Panier optimisé (multi-enseignes),Baobab Shop,P28,Micro-ondes Samsung 23 L,1,65400,65400
+TOTAL OPTIMISÉ,Meilleure enseigne par article,,TOTAL PANIER OPTIMISÉ,,,477575
